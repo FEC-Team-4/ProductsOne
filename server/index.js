@@ -29,7 +29,7 @@ app.get('/', (req, res) => res.render('index', {layout: 'landing'}));
 //products routes
 app.use('/products', require('../routes/products'))
 
-const PORT = process.env.PORT || 5431;
+const PORT = process.env.PORT || 5432;
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`)
