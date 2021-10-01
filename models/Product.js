@@ -1,8 +1,11 @@
-const Sequelize = require('sequelize');
+const {Sequelize} = require('sequelize');
 const db = require('../config/database');
 
 const Product = db.define('product', {
-//fill in
+  id: {
+    type: Sequelize.INTEGER
+  },
+  
 })
 
 Product.sync().then(() => {
