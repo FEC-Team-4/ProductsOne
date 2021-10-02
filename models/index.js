@@ -1,26 +1,68 @@
-const {Sequelize} = require('sequelize');
+const { Sequelize } = require('sequelize');
 
-const {sequelize} = require('../config/database.js');
+const dotenv = require('dotenv');
+dotenv.config();
 
-
-
-const models = {};
-models.features = require('./features');
-models.photos = require('./photos');
-models.product = require('./product');
-models.related = require('./related');
-models.skus = require('./skus');
-models.styles = require('./styles');
-
-Object.keys(models).forEach((modelName) => {
-  if('associate' in models[modelName]) {
-    models[modelName].associate(models)
+const sequelize = new Sequelize(process.env.DB, process.env.USER, process.env.PASSWORD, {
+  host: process.env.HOST,
+  dialect: 'postgres',
+  define: {
+    timestamps: false
+  },
+  logging: false,
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000
   }
 });
 
-models.sequelize = sequelize;
+const models = {};
+
 models.Sequelize = Sequelize;
+models.sequelize = sequelize;
+
+models.features = require('./features')(sequelize, Sequelize);
+models.photos = require('./photos')(sequelize, Sequelize);
+models.product = require('./product')(sequelize, Sequelize);
+models.related = require('./related')(sequelize, Sequelize);
+models.skus = require('./skus')(sequelize, Sequelize);
+models.styles = require('./styles')(sequelize, Sequelize);
+
+models.styles.hasMany(models.product, {as: 'styles', foreignKey: 'id'});
+
+models.product.belongsTo(models.styles, {
+  foreignKey: 'id',
+  as: 'productId'
+});
+
+models.features.hasMany(models.product, {as: 'features', foreignKey: 'id'});
+
+models.product.belongsTo(models.features, {
+  foreignKey: 'id',
+  as: 'product_id'
+});
+
+models.related.hasMany(models.product, {as: 'related', foreignKey: 'id'});
+
+models.product.belongsTo(models.related, {
+  foreignKey: 'id',
+  as: 'current_product_id'
+});
+
+models.skus.hasMany(models.styles, {as: 'skus', foreignKey: 'id'});
+
+models.styles.belongsTo(models.skus, {
+  foreignKey: 'id',
+  as: 'styleId'
+});
+
+// models.photos.hasMany(models.styles, {as: 'photos', foreignKey: 'id'});
+
+// models.styles.belongsTo(models.photos, {
+//   foreignKey: 'id',
+//   as: 'styleId'
+// });
 
 module.exports = models;
-
-//add in foreign keys?

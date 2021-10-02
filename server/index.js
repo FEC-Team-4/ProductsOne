@@ -1,10 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const models = require('../models/index.js');
+const {sequelize} = require('../models/index.js');
 
 //database
-const db = require('../config/database.js');
+const db = require('../models/index.js');
 
 const app = express();
 
@@ -19,7 +19,7 @@ const PORT = 3000;
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`)
-  db.authenticate()
+  sequelize.authenticate()
    .then(() => console.log('db connected...'))
    .catch(err => console.log('db err:', err))
 })

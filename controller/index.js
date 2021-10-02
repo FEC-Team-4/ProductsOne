@@ -1,29 +1,39 @@
-const {db} = require('../config/database.js');
+const {sequelize} = require('../models/index.js');
+const {QueryTypes} = require('sequelize');
 
 module.exports = {
-  getProducts: (req, res) => {
-    res.send('product list route working')
-    // let { page, count } = req.body;
-    // if (!page) {page = 2}
-    // if (!count) {count = 3}
-    // const queryString = `SELECT id, name, slogan, category, description, default_price
-    //   FROM products LIMIT $1 OFFSET $2;`;
+  getProducts: async (req, res) => {
+    const queryString = `SELECT * FROM public.product limit 5;`;
+    const result = await sequelize.query(queryString, { type: QueryTypes.SELECT });
+    res.send(result);
+  },
 
-    // db.any(queryString, [count, (count * (page - 1))])
-    //   .then((data) => {
-    //     res.send(data);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+  getProductInfo: async (req, res) => {
+    //req.params
+    const queryString = `SELECT * FROM public.product
+    INNER JOIN public.features
+    ON public.product.id = public.features.product_id
+    WHERE public.product.id = 3;`;
+    const result = await sequelize.query(queryString, { type: QueryTypes.SELECT });
+    res.send(result);
   },
-  getProductInfo: (req, res) => {
-    res.send('product info route working')
-  },
+
   getStyles: (req, res) => {
     res.send('styles route working')
+    // QUERY NEEDS WORK
+    // SELECT * FROM public.styles
+    // INNER JOIN public.photos
+    // ON public.styles.id = public.photos."styleId"
+    // INNER JOIN public.skus
+    // ON public.photos."styleId" = public.skus."styleId"
+    // WHERE public.styles.productId = 3;
   },
+
   getRelated: (req, res) => {
     res.send('related route working')
+
+    //QUERY
+    // SELECT * FROM public.related
+    // WHERE public.related.current_product_id = 3;
   }
 };
