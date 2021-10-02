@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const models = require('../models/index.js');
 
 //database
 const db = require('../config/database.js');
@@ -11,10 +12,8 @@ const app = express();
 app.use(express.urlencoded({extended: true}))
 
 //products routes
-app.use('/', require('../routes/ProductInfo.js'));
-app.use('/', require('../routes/ProductList.js'));
-app.use('/', require('../routes/Related.js'));
-app.use('/', require('../routes/Styles.js'));
+const router = require('./routes.js');
+app.use('/', router);
 
 const PORT = 3000;
 

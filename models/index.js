@@ -1,16 +1,26 @@
 const {Sequelize} = require('sequelize');
 
-import {sequelize} from '../config/database.js';
-
-const db = {};
-
-db.Sequelize = Sequelize;
-db.sequelize = sequelize;
-
-db.productInfo = require('./ProductInfo.js')(sequelize, Sequelize);
-db.productList = require('./ProductList.js')(sequelize, Sequelize);
-db.related = require('./Related.js')(sequelize, Sequelize);
-db.styles = require('./Styles.js')(sequelize, Sequelize);
+const {sequelize} = require('../config/database.js');
 
 
-//add in foreign keys
+
+const models = {};
+models.features = require('./features');
+models.photos = require('./photos');
+models.product = require('./product');
+models.related = require('./related');
+models.skus = require('./skus');
+models.styles = require('./styles');
+
+Object.keys(models).forEach((modelName) => {
+  if('associate' in models[modelName]) {
+    models[modelName].associate(models)
+  }
+});
+
+models.sequelize = sequelize;
+models.Sequelize = Sequelize;
+
+module.exports = models;
+
+//add in foreign keys?
