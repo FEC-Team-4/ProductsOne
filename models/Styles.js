@@ -1,5 +1,5 @@
 // const {Sequelize} = require('sequelize');
-const db = require('../config/database');
+const db = require('../config/database.js');
 
 const Styles = db.define('Styles', {
 
