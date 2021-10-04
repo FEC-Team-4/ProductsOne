@@ -3,7 +3,7 @@ const {QueryTypes} = require('sequelize');
 
 module.exports = {
   getProducts: async (req, res) => {
-    const queryString = `SELECT * FROM public.product limit 5;`;
+    const queryString = `SELECT * FROM public.product;`;
     const result = await sequelize.query(queryString, { type: QueryTypes.SELECT });
     res.send(result);
   },
