@@ -7,7 +7,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER
     }
   });
-
   return Related;
 };
 

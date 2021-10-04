@@ -17,6 +17,7 @@ const sequelize = new Sequelize(process.env.DB, process.env.USER, process.env.PA
     idle: 10000
   }
 });
+//k6 could bring up pool problem
 
 const models = {};
 
@@ -58,11 +59,11 @@ models.styles.belongsTo(models.skus, {
   as: 'styleId'
 });
 
-// models.photos.hasMany(models.styles, {as: 'photos', foreignKey: 'id'});
+models.photos.hasMany(models.styles, {as: 'photos', foreignKey: 'id'});
 
-// models.styles.belongsTo(models.photos, {
-//   foreignKey: 'id',
-//   as: 'styleId'
-// });
+models.styles.belongsTo(models.photos, {
+  foreignKey: 'id',
+  as: 'style_id'
+});
 
 module.exports = models;

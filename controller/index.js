@@ -9,31 +9,34 @@ module.exports = {
   },
 
   getProductInfo: async (req, res) => {
-    //req.params
+    const inputId = req.params.product_id;
     const queryString = `SELECT * FROM public.product
     INNER JOIN public.features
     ON public.product.id = public.features.product_id
-    WHERE public.product.id = 3;`;
+    WHERE public.product.id = ${inputId};`;
     const result = await sequelize.query(queryString, { type: QueryTypes.SELECT });
     res.send(result);
   },
 
-  getStyles: (req, res) => {
-    res.send('styles route working')
-    // QUERY NEEDS WORK
-    // SELECT * FROM public.styles
-    // INNER JOIN public.photos
-    // ON public.styles.id = public.photos."styleId"
-    // INNER JOIN public.skus
-    // ON public.photos."styleId" = public.skus."styleId"
-    // WHERE public.styles.productId = 3;
+  getStyles: async (req, res) => {
+    const inputId = req.params.product_id;
+    const queryString = `SELECT * FROM public.styles
+    INNER JOIN public.photos
+    ON public.styles.id = public.photos."styleId"
+    INNER JOIN public.skus
+    ON public.photos."styleId" = public.skus."styleId"
+    WHERE public.styles.productId = ${inputId};`;
+    const result = await sequelize.query(queryString, { type: QueryTypes.SELECT });
+    res.send(result);
   },
 
-  getRelated: (req, res) => {
-    res.send('related route working')
-
-    //QUERY
-    // SELECT * FROM public.related
-    // WHERE public.related.current_product_id = 3;
+  getRelated: async (req, res) => {
+    const inputId = req.params.product_id;
+    const queryString = `SELECT * FROM public.related
+    WHERE public.related.current_product_id = ${inputId};`;
+    const data = await sequelize.query(queryString, { type: QueryTypes.SELECT });
+    const resultArr = [];
+    data.forEach(item => resultArr.push(item.related_product_id))
+    res.send(resultArr);
   }
 };
