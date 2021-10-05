@@ -3,7 +3,7 @@ import http from 'k6/http';
 import { sleep } from 'k6';
 
 export default function () {
-  http.get('http://localhost:3000/products/59/styles');
+  http.get('http://localhost:3000/products');
   sleep(1);
 }
 

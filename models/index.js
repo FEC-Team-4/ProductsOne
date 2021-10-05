@@ -10,12 +10,12 @@ const sequelize = new Sequelize(process.env.DB, process.env.USER, process.env.PA
     timestamps: false
   },
   logging: false,
-  pool: {
-    max: 5,
-    min: 0,
-    acquire: 30000,
-    idle: 10000
-  }
+  // pool: {
+  //   max: 5,
+  //   min: 0,
+  //   acquire: 30000,
+  //   idle: 10000
+  // }
 });
 //k6 could bring up pool problem
 
