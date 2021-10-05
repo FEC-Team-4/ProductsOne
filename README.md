@@ -1,6 +1,8 @@
 # SDC
 
 > this app uses Node, Express, Sequelize and PostgreSql.
+> Database
+> API Interface
 
 # Quick Start
 
@@ -8,8 +10,10 @@
 # Install dependencies
 npm install
 
-# Serve on localhost:5000
-npm run start-prod
-# Dev Server (Nodemon)
+# Serve on localhost:3000
 npm start
+
+# Test /products route performance
+npm test
+
 ```
