@@ -4,7 +4,7 @@
   "description": "SDC capstone project for Hack Reactor",
   "main": "/server/index.js",
   "scripts": {
-    "test": "test",
+    "test": "k6 run /Users/cassandrawages1/Desktop/hrla46/SDC/ProductsOne/k6testing/script.js",
     "start": "nodemon ./server/index.js"
   },
   "repository": {
@@ -18,10 +18,14 @@
   },
   "homepage": "https://github.com/FEC-Team-4/SDC#readme",
   "dependencies": {
+    "axios": "^0.21.4",
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
     "dotenv": "^10.0.0",
-    "express": "^4.17.1"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.13"
+    "express": "^4.17.1",
+    "nodemon": "^2.0.13",
+    "pg": "^8.7.1",
+    "postgresql": "^0.0.1",
+    "sequelize": "^6.6.5"
   }
 }
