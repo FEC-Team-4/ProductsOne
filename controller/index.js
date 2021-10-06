@@ -3,22 +3,21 @@ const {QueryTypes} = require('sequelize');
 
 module.exports = {
   getProducts: async (req, res) => {
-    const queryString = `SELECT * FROM public.product;`;
-    const result = await sequelize.query(queryString, { type: QueryTypes.SELECT });
+    let { page, count } = req.query;
+    if (!page) { page = 1; };
+    if (!count) { count = 5; };
+    let updateCount = count * (page-1);
+    const queryString = `SELECT * FROM public.product LIMIT ${page} OFFSET ${updateCount};`;
+    const result = await sequelize.query(queryString,  { type: QueryTypes.SELECT });
     res.send(result);
   },
 
   getProductInfo: async (req, res) => {
     const inputId = req.params.product_id;
-    const queryString = `SELECT *, (SELECT json_agg(json_build_object(
-        'feature', feature,
-        'value', value
-      ))
-      AS features
-      FROM features
-        WHERE product_id = p.id
-          GROUP BY product_id
-    ) FROM product AS p WHERE id = ${inputId};`;
+    const queryString = `SELECT p.*, json_agg(json_build_object(
+      'feature', f.feature,
+     'value', f.value
+    )) AS features FROM PRODUCT AS p JOIN FEATURES AS f ON p.id = f.product_id WHERE p.id = ${inputId} group by p.id;`;
     const result = await sequelize.query(queryString, { type: QueryTypes.SELECT });
     res.send(result);
   },
