@@ -4,13 +4,13 @@ import { sleep } from 'k6';
 
 // export const options = {
 //   vus: 100,
-//   duration: '30s',
+//   duration: '15s',
 // };
 
-export default function () {
-  http.get('http://localhost:3000/products/');
-  sleep(1);
-}
+// export default function () {
+//   http.get('http://localhost:3000/products/');
+//   sleep(1);
+// }
 
 // export default function () {
 //   http.get('http://localhost:3000/products/100999');
@@ -22,10 +22,10 @@ export default function () {
 //   sleep(1);
 // }
 
-// export default function () {
-//   http.get('http://localhost:3000/products/55555/related');
-//   sleep(1);
-// }
+export default function () {
+  http.get('http://localhost:3000/products/55555/related');
+  sleep(1);
+}
 
 
 

@@ -13,3 +13,5 @@ module.exports = (sequelize, DataTypes) => {
 
   return Features;
 };
+
+//string product id
