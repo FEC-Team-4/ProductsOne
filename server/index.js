@@ -18,13 +18,13 @@ app.use(express.json());
 //products routes
 const router = require('./routes.js');
 app.use('/', router);
+app.get('/loaderio-80496fefee50c399d582449ec961f05a/', (req, res) => {
+  res.status(200).sendFiles(path.join(__dirname + "/token.txt"));
+})
 
 const PORT = 3000;
-// || process.env.;
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`)
-  sequelize.authenticate()
-   .then(() => console.log('db connected...'))
-   .catch(err => console.log('db err:', err))
+
 })
